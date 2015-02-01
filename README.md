@@ -11,11 +11,24 @@ npm i update-license --save
 ## Usage
 
 ```js
-var updateLicense = require('update-license');
+var license = require('update-license');
 ```
 
-## API
+Pass a license string with copyright information to update (currently only supports MIT):
 
+```js
+var fs = require('fs');
+var str = fs.readFileSync('LICENSE-MIT', 'utf8')
+license(str);
+```
+
+If you want to change any information, you can pass it on the options:
+
+```js
+license(str, {author: 'Foo Bar'});
+```
+
+See [update-copyright](https://github.com/jonschlinkert/update-copyright).
 
 
 ## Run tests
@@ -23,7 +36,7 @@ var updateLicense = require('update-license');
 Install dev dependencies:
 
 ```bash
-node i -d && mocha
+npm i -d && npm test
 ```
 
 ## Contributing

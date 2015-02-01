@@ -9,7 +9,7 @@
 
 var update = require('update-copyright');
 
-module.exports = function (str, options) {
+module.exports = function updateLicense(str, options) {
   var parsed = update.parse(str, options);
   var match = parsed.matches[0];
   str = str.replace(match.statement, parsed.updated);
@@ -37,7 +37,8 @@ function fixLead(str, type) {
 }
 
 /**
- * TODO: add more types
+ * TODO: add more types. MIT is the only one
+ * I use, but I'm happy to take pull requests.
  */
 
 function testLead(type) {
