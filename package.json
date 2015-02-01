@@ -1,6 +1,6 @@
 {
   "name": "update-license",
-  "description": "Update copyright information in a license.",
+  "description": "Update copyright information in a MIT license.",
   "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/update-license",
   "author": {
