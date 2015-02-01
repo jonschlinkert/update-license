@@ -29,13 +29,18 @@ describe('update', function () {
     assert.equal(license('Copyright (c) 2015, Jon Schlinkert.'), 'Copyright (c) 2015, Jon Schlinkert.');
   });
 
-  it('should update a copyright statement in a license file:', function () {
-    console.log(license(read('LICENSE-A')))
-    assert.equal(license(read('LICENSE-A')), read('LICENSE-A-expected'));
-  });
-
   it('should add a copyright symbol if missing:', function () {
     assert.equal(license('Copyright 2014, Jon Schlinkert.'), 'Copyright (c) 2014-2015, Jon Schlinkert.');
     assert.equal(license('Copyright 2015, Jon Schlinkert.'), 'Copyright (c) 2015, Jon Schlinkert.');
+  });
+
+  it('should update a copyright statement in a license file:', function () {
+    assert.equal(license(read('LICENSE-A')), read('LICENSE-A-expected'));
+    assert.equal(license(read('LICENSE-B')), read('LICENSE-B-expected'));
+    assert.equal(license(read('LICENSE-C')), read('LICENSE-C-expected'));
+  });
+
+  it('should fix the lead in a MIT license:', function () {
+    assert.equal(license(read('LICENSE-D')), read('LICENSE-D-expected'));
   });
 });
