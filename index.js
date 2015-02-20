@@ -1,66 +1,23 @@
 /*!
  * update-license <https://github.com/jonschlinkert/update-license>
  *
- * Copyright (c) 2015 Jon Schlinkert, contributors.
- * Licensed under the MIT license.
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
+var fs = require('fs');
 var update = require('update-copyright');
+var _ = require('lodash');
+var tmpl = fs.readFileSync(__dirname + '/templates/MIT.txt', 'utf8');
 
 module.exports = function updateLicense(str, options) {
   var parsed = update.parse(str, options);
-  var match = parsed.matches[0];
-  str = str.replace(match.statement, parsed.updated);
-  if (str.slice(-1) === '.') {
-    return str.slice(0, str.length - 1);
+  if (parsed && typeof parsed.updated === 'string') {
+    var res = parsed.updated;
+    res = res.split(', contributors').join('');
+    return _.template(tmpl)({copyright: res});
   }
-  str = fixLead(str, 'MIT');
   return str;
 };
-
-function fixLead(str, type) {
-  str = str.replace(/\r/g, '');
-  var lines = str.split('\n');
-  var regex = testLead(type);
-  var first = lines[0];
-
-  if (regex.test(first)) {
-    lines[0] = expectedLead(type);
-    str = lines.join('\n');
-  } else {
-    str = expectedLead(type) + '\n\n' + str;
-  }
-
-  return str;
-}
-
-/**
- * TODO: add more types. MIT is the only one
- * I use, but I'm happy to take pull requests.
- */
-
-function testLead(type) {
-  var regex = '';
-
-  switch(type) {
-    case 'MIT':
-      regex = /The[ \t]MIT[ \t]License[ \t]\(MIT\)/i;
-      break;
-  }
-
-  return regex;
-}
-
-function expectedLead(type) {
-  var lead = '';
-
-  switch(type) {
-    case 'MIT':
-      lead = 'The MIT License (MIT)';
-      break;
-  }
-
-  return lead;
-}
